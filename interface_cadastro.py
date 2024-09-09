@@ -45,23 +45,29 @@ up_layout=[
 
 down_layout = [
     [
-        sg.Text("Nome"), sg.Input(key='-NOME-'),sg.Text('Idade'), 
-        sg.Combo([str(i) for i in range(18, 66)], readonly=True,size=(3,1), key='-IDADE-'),sg.Push()],
+        sg.Text("Nome"), sg.Input(key='-NOME-'),
+        sg.Text('Idade'), 
+        sg.Combo([str(i) for i in range(18, 66)], readonly=True,size=(3,1), key='-IDADE-'),
+        sg.Push()],
 
     [
         sg.Text("Cidade"),sg.Input(size=(15,1)),sg.Text("UF"),
-        sg.Input(size=(2,1)),sg.Push()],
+        sg.Input(size=(2,1)),sg.Text("Celular"),
+        sg.Input("(99)9 9999-9999", size=(15,1),key='-CELULAR-'), 
+        sg.Push()],
 
     [
         sg.CalendarButton("Data de nascimento",target='-BIRTH-', format='%d-%m-%y'),
         sg.Input(key='-BIRTH-',size=(10,1), readonly=True),
         sg.CalendarButton("Data de entrada", target="-DATA-", format='%d-%m-%y'),
-        sg.Input(key='-DATA-',size=(10,1), readonly=True),sg.Push()],
+        sg.Input(key='-DATA-',size=(10,1), readonly=True),
+        sg.Push()],
 
     [
         sg.Text("Tipo"), 
         sg.Combo(['Involuntaria', 'Voluntaria', 'Compulsoria'], key='-TIPO-', 
-              size=(11, 1),readonly=True),sg.Push()],
+              size=(11, 1),readonly=True),
+              sg.Push()],
 
     [sg.Button("Salvar",key='-SALVAR-')]
 ]
