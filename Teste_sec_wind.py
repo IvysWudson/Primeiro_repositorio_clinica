@@ -1,38 +1,65 @@
 import PySimpleGUI as sg
+import sqlite3
+import bcrypt
 
-# Layout da primeira janela
-layout1 = [
-    [sg.Button("Abrir outra janela", key='-JANELA2-')],
-    [sg.Button("Fechar", key='-FECHAR-')]
-]
 
-# Criação da primeira janela
-main_window = sg.Window("Janela 1", layout1)
 
-# Loop principal da primeira janela
-while True:
-    event, values = main_window.read()
-
-    if event == sg.WINDOW_CLOSED or event == '-FECHAR-':
-        break
-
-    # Abrir segunda janela
-    if event == '-JANELA2-':
-        layout2 = [
-            [sg.Text("Esta é a segunda janela!")],
-            [sg.Button("Fechar segunda janela", key='-FECHAR2-')]
+user = []
+password = []
+def janela_2():
+    layout_janela_2 = [
+            [sg.Text("Novo usuário"), sg.Input(key='-NEWUSER-')],
+            [sg.Text("Nova senha"), sg.Input(key='-NEWPASSWORD-', password_char='*')],
+            [sg.Text("Repita a senha"), sg.Input(key='-REPEATPASSWORD-', password_char='*')],
+            [sg.Button("Terminar", key='-FINISH-')]
         ]
 
         # Criação da segunda janela
-        second_window = sg.Window("Janela 2", layout2)
+    second_window = sg.Window("Janela número 2", layout_janela_2)
 
-        # Loop da segunda janela
-        while True:
-            second_event, second_values = second_window.read()
+        # Loop para eventos da segunda janela
+    while True:
+        second_event, second_values = second_window.read()
 
-            if second_event == sg.WINDOW_CLOSED or second_event == '-FECHAR2-':
-                second_window.close()
-                break
+        # Fechar a segunda janela
+        if second_event == sg.WINDOW_CLOSED or second_event == '-FINISH-':
+            second_window.close()
+            break
 
-# Fechar a primeira janela quando o loop terminar
-main_window.close()
+
+
+def janela_1():
+    layout_janela_1 = [
+        [sg.Text('Usuário'), sg.Input(key='-USER-'), sg.Push()],
+        [sg.Text('Senha'), sg.Input(key='-PASSWORD-', password_char='*'), sg.Push()],
+        [sg.Button("Login", key='-LOGIN-'), sg.Button("Cadastrar", key='-REGISTER-')]
+    ]
+
+    # Criação da janela principal
+    window = sg.Window("Janela 1", layout_janela_1)
+
+    # Loop principal para eventos
+    while True: 
+        # Ler eventos e valores da janela principal
+        event, values = window.read()
+
+        # Fechar a janela principal se o botão de fechar for pressionado
+        if event == sg.WINDOW_CLOSED:
+            break
+
+        if event == '-LOGIN-':
+            if values['-USER-'] in user and values['-PASSWORD-']  == password[user.index(values['-USER-'])]:
+                sg.popup("Login bem sucedido!")
+            else: 
+                sg.popup("Usuario ou senha incorretos!")
+            
+            
+     # Se o botão "Cadastrar" for pressionado, abre a segunda janela
+        if event == '-REGISTER-':
+            janela_2()
+
+
+
+
+
+
