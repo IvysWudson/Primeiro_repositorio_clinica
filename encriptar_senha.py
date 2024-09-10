@@ -1,3 +1,6 @@
+import sqlite3
+import bcrypt
+
 def conect_bd():
     conn = sqlite3.connect("Login.db")
     cur = conn.cursor()
